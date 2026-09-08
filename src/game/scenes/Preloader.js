@@ -35,10 +35,17 @@ export class Preloader extends Scene
         this.load.bitmapFont('squareFont', 'square_6x6.png', 'square_6x6.xml');
         this.load.bitmapFont('squareFontLight', 'square_6x6_light.png', 'square_6x6.xml');
         this.load.bitmapFont('squareFontDark', 'square_6x6_dark.png', 'square_6x6.xml');
+        
+        this.load.audio('music', [
+            'tropical.ogg',
+            'tropical.mp3'
+        ]);
     }
 
     create ()
     {
+        this.scale.setZoom(4);
+
         //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
         //  For example, you can define global animations here, so we can use them in other scenes.
 
@@ -56,6 +63,17 @@ export class Preloader extends Scene
         });
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
+
+        let text1 = this.add.bitmapText(4, 4, 'squareFontLight', 'CLICK', 40, 0);
+        let text2 = this.add.bitmapText(4, 44, 'squareFontLight', 'HERE', 40, 0);
+
+        // debugger;
+
+        this.input.once('pointerdown', () => {
+
+            this.scene.start('MainMenu');
+
+        });
+        // this.scene.start('MainMenu');
     }
 }

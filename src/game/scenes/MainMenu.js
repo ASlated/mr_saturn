@@ -18,6 +18,9 @@ export class MainMenu extends Scene
 
     create ()
     {
+        this.music = this.sound.add('music');
+        this.music.play("", {loop: true});
+
         this.graphics = this.add.graphics();
 
         this.graphics.fillStyle(0xeec39a, 1);
@@ -26,14 +29,14 @@ export class MainMenu extends Scene
         this.graphics.fillRect(0, 96, 160, 48);
 
         let titleStr = 'MR. SATURN';
-        let titleChars = []
+        let titleChars = [];
         for (let char of titleStr) {
             titleChars.push(this.add.bitmapText(0, TITLE_Y, 'squareFontLight', char, 10 * TITLE_SCALING, 0));
         }
-        let titleLeftPos = 80 - titleStr.length * TITLE_SIZE * TITLE_SCALING / 2
+        let titleLeftPos = 80 - titleStr.length * TITLE_SIZE * TITLE_SCALING / 2;
         for (let i = 0; i < titleChars.length; i++) {
             const e = titleChars[i];
-            e.setX(titleLeftPos + TITLE_SIZE * i * TITLE_SCALING)
+            e.setX(titleLeftPos + TITLE_SIZE * i * TITLE_SCALING);
             this.tweens.add({
                 targets: e,
                 y: TITLE_Y + TITLE_Y_MOVEMENT,
@@ -66,7 +69,7 @@ export class MainMenu extends Scene
                 repeat: -1,
                 onYoyo: () => {
                     saturn.playAfterDelay('walk-left', Math.random() * 800);
-                    saturn.setY(8);
+                    saturn.setY(12);
                 },
                 onRepeat: () => {
                     saturn.playAfterDelay('walk-right', Math.random() * 800);
@@ -80,8 +83,5 @@ export class MainMenu extends Scene
             this.scene.start('Game');
 
         });
-
-
-        this.scale.setZoom(4);
     }
 }
