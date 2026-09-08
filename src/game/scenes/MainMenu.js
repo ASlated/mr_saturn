@@ -20,7 +20,8 @@ export class MainMenu extends Scene
     {
         this.music = this.sound.add('music');
         this.music.play("", {loop: true});
-
+        this.startGameSound = this.sound.add('start-game-sound');
+        
         this.graphics = this.add.graphics();
 
         this.graphics.fillStyle(0xeec39a, 1);
@@ -29,11 +30,31 @@ export class MainMenu extends Scene
         this.graphics.fillRect(0, 96, 160, 48);
 
         let titleStr = 'MR. SATURN';
+        let titleLeftPos = 80 - titleStr.length * TITLE_SIZE * TITLE_SCALING / 2;
+
+        
+        let titleCharsShadow = [];
+        for (let char of titleStr) {
+            titleCharsShadow.push(this.add.bitmapText(0, TITLE_Y, 'squareFontShadow', char, 10 * TITLE_SCALING, 0));
+        }
+        for (let i = 0; i < titleCharsShadow.length; i++) {
+            const e = titleCharsShadow[i];
+            e.setX(titleLeftPos + TITLE_SIZE * i * TITLE_SCALING);
+            this.tweens.add({
+                targets: e,
+                y: TITLE_Y + TITLE_Y_MOVEMENT,
+                duration: 800,
+                repeat: -1,
+                ease: 'quad.inout',
+                yoyo: true,
+                delay: i * 100 + 750
+            });
+        }
+        
         let titleChars = [];
         for (let char of titleStr) {
             titleChars.push(this.add.bitmapText(0, TITLE_Y, 'squareFontLight', char, 10 * TITLE_SCALING, 0));
         }
-        let titleLeftPos = 80 - titleStr.length * TITLE_SIZE * TITLE_SCALING / 2;
         for (let i = 0; i < titleChars.length; i++) {
             const e = titleChars[i];
             e.setX(titleLeftPos + TITLE_SIZE * i * TITLE_SCALING);
@@ -47,6 +68,8 @@ export class MainMenu extends Scene
                 delay: i * 100 + 500
             });
         }
+
+
         let text = this.add.bitmapText(0, 84, 'squareFontLight', 'Press \'ENTER\' to start', 10, 0)
         text.setX(80 - Math.round(text.width / 2))
         
@@ -80,8 +103,18 @@ export class MainMenu extends Scene
         
         this.input.keyboard.on('keydown-ENTER', () => {
 
-            this.scene.start('Game');
-
+            this.music.setVolume(0.8);
+            this.startGameSound.play();
+            this.cameras.main.fade(1000, 0, 0, 0);
+            this.timedEvent = this.time.delayedCall(1000, () => {
+                this.music.stop();
+                this.scene.start('Game');
+            });
+            this.tweens.add({
+                targets: this.music,
+                volume: 0,
+                duration: 500
+            });
         });
     }
 }

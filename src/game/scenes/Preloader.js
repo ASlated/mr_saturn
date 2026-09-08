@@ -35,10 +35,16 @@ export class Preloader extends Scene
         this.load.bitmapFont('squareFont', 'square_6x6.png', 'square_6x6.xml');
         this.load.bitmapFont('squareFontLight', 'square_6x6_light.png', 'square_6x6.xml');
         this.load.bitmapFont('squareFontDark', 'square_6x6_dark.png', 'square_6x6.xml');
+        this.load.bitmapFont('squareFontShadow', 'square_6x6_shadow.png', 'square_6x6.xml');
         
         this.load.audio('music', [
             'tropical.ogg',
             'tropical.mp3'
+        ]);
+        
+        this.load.audio('start-game-sound', [
+            'start_game.ogg',
+            'start_game.mp3'
         ]);
     }
 

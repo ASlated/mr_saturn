@@ -10,6 +10,8 @@ export class Game extends Scene
     create ()
     {
         this.cameras.main.setBackgroundColor(0x00ff00);
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+
 
         this.add.image(512, 384, 'background').setAlpha(0.5);
 
